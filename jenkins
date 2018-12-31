@@ -1,0 +1,28 @@
+node{
+    stage('git')
+    {
+     git credentialsId: '5bda72b1-06a6-46df-bb43-48c78343fe52', url: 'https://github.com/girish423/maven-web-application.git'
+
+    }
+    stage ('build')
+    {
+        sh 'mvn clean package'
+    }
+    stage ('sonar')
+    {
+        sh 'mvn clean package sonar:sonar'
+    }
+    stage ('nexus')
+    {
+        sh 'mvn clean deploy'
+    }
+    stage ('tomact')
+    {
+        sh 'cp $WORKSPACE/target/*.war /opt/apache-tomcat-8.5.37/webapps'
+    }
+    stage ('email')
+    {
+        mail bcc: '', body: 'with regrds', cc: '', from: '', replyTo: '', subject: 'maven', to: 'girish4yu@gmail.com'
+
+    }
+}
