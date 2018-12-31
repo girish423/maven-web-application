@@ -1,8 +1,11 @@
 node{
     stage('git')
-    {
+  <!--  {
      git credentialsId: '5bda72b1-06a6-46df-bb43-48c78343fe52', url: 'https://github.com/girish423/maven-web-application.git'
 
+    }-->
+    {
+    scm checkout
     }
     stage ('build')
     {
